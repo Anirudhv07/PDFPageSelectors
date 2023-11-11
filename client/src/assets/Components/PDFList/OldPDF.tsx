@@ -53,14 +53,14 @@ const OldPDF=()=>{
     <div className="w-full flex flex-col items-center " >
 
     <Typography variant="h3" color="white" className="p-7 font-body">Previous Project</Typography>
-    <div className="w-full flex justify-center flex-col items-center">
+    <div className="w-full flex justify-center flex-col items-center ">
     <Card className="w-3/4">
 
       <List>
         {uploads.map((uploads)=>{
           return(
             
-            <ListItem ripple={false} key={uploads} className="py-1 pr-1 pl-4">
+            <ListItem ripple={false} key={uploads} className="py-1 pr-1 pl-4 flex flex-wrap">
               {uploads}
               <ListItemSuffix>
                
