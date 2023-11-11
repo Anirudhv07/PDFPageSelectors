@@ -5,6 +5,7 @@ import AppError from "./error/app_error"
 import { errorHandlingMiddleware } from "./middleware/error_handling"
 import router from "./routes"
 import cors from 'cors'
+import connectDB from "./config/databaseConfig"
 
 const app=express()
 
@@ -12,7 +13,8 @@ app.use(cors());
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use('/',router)
+connectDB()
+app.use(router)
 
 
 app.use('/*',(req,res)=>{

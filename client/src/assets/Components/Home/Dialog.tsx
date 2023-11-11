@@ -6,13 +6,13 @@ import {
   DialogBody,
   DialogFooter,
 } from '@material-tailwind/react';
-import { Document, Page,pdfjs } from 'react-pdf';
-import {PDFDocument,PDFPage} from 'pdf-lib'
+import { Document, Page, pdfjs } from 'react-pdf';
+import { PDFDocument, PDFPage } from 'pdf-lib'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 
- pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 interface DialogBoxInterface {
   handleOpen: () => void;
@@ -21,29 +21,28 @@ interface DialogBoxInterface {
 }
 
 const DialogBox: React.FC<DialogBoxInterface> = ({ handleOpen, open, pdfFile }) => {
+
   const [numPages, setNumPages] = useState(0);
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
-    console.log("pagenumber : ", numPages);
-    
+
     setNumPages(numPages);
   };
 
+  //Select Page
   const togglePageSelection = (pageNumber: number) => {
     setSelectedPages((prevSelectedPages) => {
       if (prevSelectedPages.includes(pageNumber)) {
-        // Deselect the page if it's already selected
         return prevSelectedPages.filter((page) => page !== pageNumber);
       } else {
-        // Select the page if it's not selected
         return [...prevSelectedPages, pageNumber];
       }
     });
   };
 
 
-//Download as PDF
+  //Download as PDF
   const downloadSelectedPages = async () => {
     const existingPdfBytes = await pdfFile.arrayBuffer();
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
@@ -52,21 +51,22 @@ const DialogBox: React.FC<DialogBoxInterface> = ({ handleOpen, open, pdfFile }) 
 
     const newPdfDoc = await PDFDocument.create();
     for (const copiedPage of copiedPages) {
-        const embeddedPage = await newPdfDoc.embedPage(copiedPage);
-        const page = newPdfDoc.addPage([copiedPage.getWidth(), copiedPage.getHeight()]);
-        page.drawPage(embeddedPage);
-      }
+      const embeddedPage = await newPdfDoc.embedPage(copiedPage);
+      const page = newPdfDoc.addPage([copiedPage.getWidth(), copiedPage.getHeight()]);
+      page.drawPage(embeddedPage);
+    }
 
     const newPdfBytes = await newPdfDoc.save();
 
-    // Create a Blob from the PDF bytes
     const blob = new Blob([newPdfBytes], { type: 'application/pdf' });
 
-    // Create a download link and trigger the download
-    const downloadLink = document.createElement('a');
-    downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = `newPDF-${Date.now()}.pdf`;
-    downloadLink.click();
+    if (selectedPages.length != 0) {
+      // Create a download link and trigger the download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = `newPDF-${Date.now()}.pdf`;
+      downloadLink.click();
+    }
   };
 
   return (
@@ -76,17 +76,17 @@ const DialogBox: React.FC<DialogBoxInterface> = ({ handleOpen, open, pdfFile }) 
         <DialogBody style={{ maxHeight: '400px', overflowY: 'auto' }}>
           <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {Array.from(new Array(numPages),(el, index) => (
-                <div key={`page-${index + 1}`} style={{ width: '50%' }}>
-                    <label>
+              {Array.from(new Array(numPages), (el, index) => (
+                <div key={`page-${index}`} style={{ width: '50%' }}>
+                  <label>
                     <input
                       type="checkbox"
-                      checked={selectedPages.includes(index + 1)}
-                      onChange={() => togglePageSelection(index + 1)}
+                      checked={selectedPages.includes(index)}
+                      onChange={() => togglePageSelection(index)}
                     />
                     Page {index + 1}
                   </label>
-                  <Page pageNumber={index + 1} width={400}  />
+                  <Page pageNumber={index + 1} width={400} />
                 </div>
               ))}
             </div>
@@ -96,9 +96,11 @@ const DialogBox: React.FC<DialogBoxInterface> = ({ handleOpen, open, pdfFile }) 
           <Button variant="text" color="red" onClick={handleOpen} className="mr-1">
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="green" onClick={downloadSelectedPages}>
+          {selectedPages.length != 0 ? <Button variant="gradient" color="green" onClick={downloadSelectedPages}>
             <span>Download Selected Pages</span>
-          </Button>
+          </Button> : <div></div>}
+
+
         </DialogFooter>
       </Dialog>
     </>

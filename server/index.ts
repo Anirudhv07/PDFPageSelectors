@@ -1,6 +1,7 @@
 import http from "http"
-import app from "./app";
-const PORT=3001
+import app from "./app"
+import { configKeys } from "./config/configKey"
+const PORT=configKeys.PORT
 
 const server=http.createServer(app)
 

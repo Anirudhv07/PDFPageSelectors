@@ -9,6 +9,13 @@ import controllers from "../controller/controller";
 
     router.post('/api/post',upload.single('pdf'),controllers.uploadPDF)
 
+    router.get('/api/pdf/:pdfName',controllers.getPDF)
+
+    router.post('/api/signup',controllers.signUp)
+
+    router.post('/api/login',controllers.logIn)
+
+    router.post('/api/get-all-pdf',controllers.allPDF)
 
 
 
