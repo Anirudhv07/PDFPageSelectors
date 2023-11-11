@@ -76,7 +76,7 @@ const DialogBox: React.FC<DialogBoxInterface> = ({ handleOpen, open, pdfFile }) 
         <DialogBody style={{ maxHeight: '400px', overflowY: 'auto' }}>
           <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {Array.from(new Array(numPages), (el, index) => (
+              {Array.from(new Array(numPages), (_,index) => (
                 <div key={`page-${index}`} style={{ width: '50%' }}>
                   <label>
                     <input

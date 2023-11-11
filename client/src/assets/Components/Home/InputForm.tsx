@@ -5,7 +5,6 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { green } from "@mui/material/colors";
 import { useState } from 'react'
 import { uploadPDF } from "../../api/apiConnection/connection";
 import { toast } from "react-toastify";

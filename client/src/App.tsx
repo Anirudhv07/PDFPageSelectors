@@ -6,7 +6,7 @@ import { ThemeProvider } from "@material-tailwind/react";
 import SignUpPage from './assets/Pages/SignUpPage';
 import LoginPage from './assets/Pages/LoginPage';
 import './App.css'
-import { Provider, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PdfList from './assets/Pages/PdfList';
 
 function App() {

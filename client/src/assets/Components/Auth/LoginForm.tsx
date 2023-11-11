@@ -1,7 +1,6 @@
 import {
     Card,
     Input,
-    Checkbox,
     Button,
     Typography,
   } from "@material-tailwind/react";
@@ -10,7 +9,7 @@ import * as Yup from "yup"
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logIn, signUp } from "../../api/apiConnection/connection";
+import { logIn } from "../../api/apiConnection/connection";
 import { setToken, setName, setEmail } from "../../redux/slice";
 import { toast } from "react-toastify";
    

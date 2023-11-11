@@ -1,4 +1,4 @@
-import { Avatar, Button, Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
+import { Button, Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
 import { ChevronDownIcon, HomeIcon, PrinterIcon } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ const ProfileButton = () => {
   const navigate = useNavigate()
 
   const { name } = useSelector((store: any) => store.user)
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen] = useState(false);
 
   const signOut = () => {
     dispatch(setLogOut())
