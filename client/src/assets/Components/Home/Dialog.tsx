@@ -7,7 +7,7 @@ import {
   DialogFooter,
 } from '@material-tailwind/react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { PDFDocument, PDFPage } from 'pdf-lib'
+import { PDFDocument } from 'pdf-lib'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
