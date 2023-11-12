@@ -14,6 +14,8 @@ const ProfileButton = () => {
   const { name } = useSelector((store: any) => store.user)
   const [isMenuOpen] = useState(false);
 
+
+  //SIGN OUT FUNCTION
   const signOut = () => {
     dispatch(setLogOut())
     toast.success('Signout Successful')
@@ -70,13 +72,13 @@ const ProfileButton = () => {
         </Link>
 
         <hr className="my-2 border-blue-gray-50" />
-        <MenuItem className="flex items-center gap-2 " onClick={signOut}>
+        <MenuItem className="flex items-center gap-2 "  onClick={signOut}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={2}
-            stroke="currentColor"
+            stroke="red"
             className="h-4 w-4"
           >
             <path
@@ -85,7 +87,7 @@ const ProfileButton = () => {
               d="M5.636 5.636a9 9 0 1012.728 0M12 3v9"
             />
           </svg>
-          <Typography variant="small" className="font-normal">
+          <Typography color='red' variant="small" className="font-normal">
             Sign Out
           </Typography>
         </MenuItem>

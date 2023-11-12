@@ -22,6 +22,7 @@ const InputForm = () => {
 
   const handleOpen = () => setOpen(!open);
 
+  //FUNCTION TO GET PDF FROM INPUT FORM
   const handlePDF = (e: any) => {
     const file = e.target.files[0]
     if (file.type == 'application/pdf') {
@@ -35,6 +36,7 @@ const InputForm = () => {
 
   }
 
+  //FUNCTION TO UPLOAD PDF
   const handleUploadPDF = async (event: { preventDefault: () => void; }) => {
     event?.preventDefault()
 

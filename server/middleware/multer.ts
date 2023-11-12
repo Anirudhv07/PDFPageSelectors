@@ -4,6 +4,7 @@ import AppError from '../error/app_error'
 import { Request, Response } from 'express'
 
 
+//TO UPLOAD PDF TO SERVER
 const storage=multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,'pdf_upload')
@@ -17,6 +18,7 @@ const storage=multer.diskStorage({
     }
 })
 
+//CHECK WHETHER THE INCOMMING FILE IS PDF OR NOT
 const fileFilter=(req:Request,file:any,cb:any)=>{
     if(file.mimetype==='application/pdf') cb(null,true)
     else cb(new AppError('upload pdf', 400))

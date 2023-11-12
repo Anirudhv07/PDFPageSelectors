@@ -1,16 +1,28 @@
 import { Request, Response } from "express";
 import fs, { promises as fsPromises } from "fs"
 import bcrypt from 'bcryptjs'
-import { generateTokenHelper, getAllPDF, isExistingUser, savePdf, signUpHelper } from "../helpers/helpers";
+import { PDFDelete, generateTokenHelper, getAllPDF, isExistingUser, savePdf, signUpHelper } from "../helpers/helpers";
 
 const controllers = {
+
+  //TO UPLOAD PDF
   uploadPDF: async (req: Request, res: Response) => {
     const fileName = req.file?.filename
     const email = req.body.email
+    console.log(fileName,email,'upload input');
+    
     const response = await savePdf(fileName, email)
-    res.json({ status: "success" })
+    console.log(response,'upload response');
+    
+    if(response){
+      console.log(response,'if conditon');
+      
+      res.json({ status: "success" })
+
+    }
   },
 
+  //TO GET A PARTICULAR PDF
   getPDF: async (req: Request, res: Response) => {
 
 
@@ -44,6 +56,7 @@ const controllers = {
     res.json(responseObj);
   },
 
+  //SIGN UP 
   signUp: async (req: Request, res: Response) => {
     const { name, email, password } = req.body
     const isEmailExist = await isExistingUser(email)
@@ -74,6 +87,7 @@ const controllers = {
 
   },
 
+  //LOG IN
   logIn: async (req: Request, res: Response) => {
     const { email, password } = req.body
 
@@ -126,6 +140,22 @@ const controllers = {
     const response = await getAllPDF(email)
     res.json(response)
 
+  },
+
+
+  //TO DELETE PDF
+  deletePDF:async(req:Request,res:Response)=>{
+    const pdfName=req.body.pdfName
+    const email=req.body.email
+
+    const response= await PDFDelete(pdfName,email)
+    const uploadedPDF=response?.uploads
+    if(response){
+      res.json({uploadedPDF,status:true})
+    }else{
+      res.json({status:false})
+    }
+    
   }
 
 

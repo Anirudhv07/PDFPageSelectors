@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getPDF, prevPDF } from "../../api/apiConnection/connection";
+import { PDFDelete, getPDF, prevPDF } from "../../api/apiConnection/connection";
 import DialogBox from "../Home/Dialog";
  
 
@@ -26,6 +26,8 @@ const OldPDF=()=>{
     getAllPDF()
 
   },[])
+
+  //TO GET ALL PDF UPLOADED BY THE USER
   const getAllPDF=async()=>{
     const response=await prevPDF(email)
     
@@ -34,6 +36,7 @@ const OldPDF=()=>{
     
   }
   
+  //TO VIEW THE PDF SELECTED 
   const handlePDF=async(uploads:string)=>{
     const response=await getPDF(uploads)
     const { data, metadata } = response.data;
@@ -49,6 +52,16 @@ const OldPDF=()=>{
   }
 
 
+  //TO DELETE PDF
+  const deletePDF=async(pdfName:string)=>{
+    const response=await PDFDelete(pdfName,email)
+    if(response.status==true){
+      setUploads(response.uploadedPDF)
+    }
+
+  }
+
+
   return (
     <div className="w-full flex flex-col items-center " >
 
@@ -57,15 +70,18 @@ const OldPDF=()=>{
     <Card className="w-3/4">
 
       <List>
-        {uploads.map((uploads)=>{
+        {uploads.length!=0?uploads.map((uploads)=>{
           return(
             
             <ListItem ripple={false} key={uploads} className="py-1 pr-1 pl-4 flex flex-wrap">
               {uploads}
-              <ListItemSuffix>
+              <ListItemSuffix className="flex flex-row gap-4">
                
                   <Button onClick={()=>handlePDF(uploads)}>
                     Select Page
+                  </Button>
+                  <Button color="red" onClick={()=>deletePDF(uploads)}>
+                    Delete
                   </Button>
               
               </ListItemSuffix>
@@ -74,7 +90,8 @@ const OldPDF=()=>{
           )
         
           
-        })}
+        }):
+        <Typography>No Previous Project</Typography>}
       </List>
       {pdfFile !== null &&< DialogBox handleOpen={handleOpen} open={open} pdfFile={pdfFile}/>}
     </Card>

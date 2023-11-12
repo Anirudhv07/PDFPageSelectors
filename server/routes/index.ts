@@ -17,6 +17,8 @@ import controllers from "../controller/controller";
 
     router.post('/api/get-all-pdf',controllers.allPDF)
 
+    router.put('/api/deletePDF',controllers.deletePDF)
+
 
 
 export default router
