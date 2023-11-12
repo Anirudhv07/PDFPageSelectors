@@ -26,4 +26,4 @@ const fileFilter=(req:Request,file:any,cb:any)=>{
 }
 
 
-export const upload=multer({storage,fileFilter})
+export const upload=multer({storage,fileFilter,limits:{ fieldSize: 5000 }})
