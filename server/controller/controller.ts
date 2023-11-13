@@ -149,6 +149,8 @@ const controllers = {
     const email=req.body.email
 
     const response= await PDFDelete(pdfName,email)
+    console.log(response);
+    
     const uploadedPDF=response?.uploads
     if(response){
       res.json({uploadedPDF,status:true})

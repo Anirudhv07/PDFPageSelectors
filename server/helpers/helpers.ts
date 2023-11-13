@@ -65,5 +65,9 @@ export const PDFDelete=async(pdfName:string,email:string)=>{
         { $pull: { uploads: pdfName } },
         { new: true }
     );
+    await fs.rm(`./pdf_upload/${pdfName}`,(err)=>{
+        if(err) console.log("fs.rm :",err);
+        
+    })
     return response
 }
