@@ -47,6 +47,24 @@ export const generateTokenHelper = (id: object) => {
 
 }
 
+//VERIFY JWT TOKEN
+export const verifyToken=(token:string)=>{
+    if(configKeys.JWT_SECRET_KEY){
+        const verification=jwt.verify(token,configKeys.JWT_SECRET_KEY) as JwtPayload
+        if(verification.exp!=undefined){
+            const currentTimeInSecond=Math.floor(Date.now()/1000)
+            if(verification.exp>=currentTimeInSecond){
+                return true
+            }else{
+                return false
+            }
+        }else{
+            return undefined
+        }
+        
+    }
+}
+
 
 //TO GET ALL PDF UPLOADED BY A USER
 export const getAllPDF = async (email: string) => {
