@@ -11,9 +11,9 @@ import userMiddleware from "../middleware/tokenVerify";
 
     router.get('/api/pdf/:pdfName',userMiddleware,controllers.getPDF)
 
-    router.post('/api/signup',userMiddleware,controllers.signUp)
+    router.post('/api/signup',controllers.signUp)
 
-    router.post('/api/login',userMiddleware,controllers.logIn)
+    router.post('/api/login',controllers.logIn)
 
     router.post('/api/get-all-pdf',userMiddleware,controllers.allPDF)
 
