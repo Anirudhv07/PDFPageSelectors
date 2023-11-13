@@ -22,9 +22,7 @@ export const signUpHelper = async (name: string, email: string, password: string
 export const savePdf = async (fileName?: string, email?: string) => {
     const file = fs.createReadStream(`./pdf_upload/${fileName}`)
     const response = await User.updateOne({ email }, { $addToSet: { uploads: fileName } })
-    if (response) {
-        console.log(response,'helper log');
-        
+    if (response) {        
         return true
     }
 

@@ -9,13 +9,10 @@ const controllers = {
   uploadPDF: async (req: Request, res: Response) => {
     const fileName = req.file?.filename
     const email = req.body.email
-    console.log(fileName,email,'upload input');
     
     const response = await savePdf(fileName, email)
-    console.log(response,'upload response');
     
     if(response){
-      console.log(response,'if conditon');
       
       res.json({ status: "success" })
 
@@ -149,8 +146,6 @@ const controllers = {
     const email=req.body.email
 
     const response= await PDFDelete(pdfName,email)
-    console.log(response);
-    
     const uploadedPDF=response?.uploads
     if(response){
       res.json({uploadedPDF,status:true})
